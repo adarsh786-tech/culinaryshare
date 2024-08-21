@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+   id           String @id @default(auto()) @map("_id") @db.ObjectId
+   username     String
+   firstname    String
+   lastname     String
+   email        String
+   profilePic   String  //(URL to the user’s profile picture)
+   bio          String  //(Short bio or description of the user)
+  //  recipes: Array of ObjectId (References to recipes created by the user)
+  //  followedCooks: Array of ObjectId (References to users they follow)
+  //  followers: Array of ObjectId (References to users who follow them)
+   createdAt    DateTime @default(now())  // (Timestamp when the user account was created)
+   updatedAt    DateTime @updatedAt  // (Timestamp when the user profile was last updated)
+   recipe       Recipe[]
+   rating       Rating[]
+   
+}
+
+model Recipe {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  title           String    //(Title of the recipe)
+  description     String    //(Brief description of the recipe)
+  ingredients     String[]  // Array of Strings (List of ingredients required)
+  instructions    String[]  //Array of Strings (Step-by-step cooking instructions)
+  tags            String[]  //Array of Strings (Tags like "Vegetarian," "Gluten-Free," etc.)
+  authorID        String @db.ObjectId //(Reference to the user who created the recipe)
+  image           String    //(URL to the recipe image)
+  avgRating       Float      // (Calculated average rating of the recipe)
+  createdAt       DateTime @default(now())  // (Timestamp when the recipe was created)
+  updatedAt       DateTime @updatedAt  // (Timestamp when the recipe was last updated)
+  
+  user            User       @relation(fields: [authorID], references: [id])
+  rating          Rating[]
+  // ratings: Array of Objects (Subdocuments containing userId and rating)
+  // averageRating: Number (Calculated average rating of the recipe)
+  // comments: Array of Objects (Subdocuments containing userId, comment, and createdAt)
+}
+
+model Rating {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  userID          String @db.ObjectId //(Reference to the user who gave the rating)
+  recipeID        String @db.ObjectId //(Reference to the recipe being rated)
+  rating          Int // (Rating given to the recipe, e.g., 1-5 stars)
+  createdAt       DateTime @default(now())  // (Timestamp when the recipe was created)
+  user            User       @relation(fields: [userID], references: [id])
+  recipe          Recipe       @relation(fields: [userID], references: [id])
+  // comment: String (Optional comment provided with the rating)
+  // createdAt: Date (Timestamp when the rating was created)
+}
