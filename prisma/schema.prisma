@@ -21,14 +21,14 @@ model User {
    email        String
    profilePic   String  //(URL to the user’s profile picture)
    bio          String  //(Short bio or description of the user)
-  //  recipes: Array of ObjectId (References to recipes created by the user)
-  //  followedCooks: Array of ObjectId (References to users they follow)
-  //  followers: Array of ObjectId (References to users who follow them)
    createdAt    DateTime @default(now())  // (Timestamp when the user account was created)
    updatedAt    DateTime @updatedAt  // (Timestamp when the user profile was last updated)
    recipe       Recipe[]
    rating       Rating[]
    
+  //  recipes: Array of ObjectId (References to recipes created by the user)
+  //  followedCooks: Array of ObjectId (References to users they follow)
+  //  followers: Array of ObjectId (References to users who follow them)
 }
 
 model Recipe {
