@@ -22,7 +22,7 @@ const LandingFooter = () => {
         </div>
 
         <h1 className={cn("text-2xl font-bold text-white ", font.className)}>
-          CULINARY <span className="text-[18px]">share</span>
+          <span>CULINARY</span> <span className="text-[18px] -ml-1">share</span>
         </h1>
         <h2 className="text-white -mt-2 text-sm">
           Copyright © {new Date().getFullYear()} - All right reserved

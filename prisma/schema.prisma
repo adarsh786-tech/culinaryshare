@@ -15,12 +15,12 @@ datasource db {
 
 model User {
    id           String @id @default(auto()) @map("_id") @db.ObjectId
-   username     String
-   firstname    String
-   lastname     String
-   email        String
-   profilePic   String  //(URL to the user’s profile picture)
-   bio          String  //(Short bio or description of the user)
+   username     String?
+   name         String
+   email        String @unique
+   hashedPassword   String
+   profilePic   String?  //(URL to the user’s profile picture)
+   bio          String?  //(Short bio or description of the user)
    createdAt    DateTime @default(now())  // (Timestamp when the user account was created)
    updatedAt    DateTime @updatedAt  // (Timestamp when the user profile was last updated)
    recipe       Recipe[]

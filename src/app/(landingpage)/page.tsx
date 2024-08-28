@@ -4,7 +4,6 @@ import LandingNavBar from "@/app/components/(landingpage)/LandingNavBar";
 import LandingHeroPage from "@/app/components/(landingpage)/LandingHeroPage";
 import LandingFooter from "@/app/components/(landingpage)/LandingFooter";
 // next-auth and hooks imports
-import { useSession, signIn, signOut } from "next-auth/react";
 
 // export default function Component() {
 //   const { data: session } = useSession();
