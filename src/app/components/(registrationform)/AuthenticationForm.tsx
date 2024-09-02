@@ -1,8 +1,11 @@
 "use client";
 import { useCallback, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { signIn, signOut } from "next-auth/react";
+
 import axios from "axios";
 
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "@/app/components/(generic)/Input";
 import Button from "@/app/components/(generic)/Button";
 import SocialAuth from "@/app/components/(generic)/SocialAuth";
@@ -38,10 +41,26 @@ const AuthenticationForm = () => {
     setIsLoading(true);
 
     if (variation === "REGISTER") {
-      axios.post("/api/register", data);
+      axios
+        .post("/api/register", data)
+        .catch(() => toast.error(`Something went wrong!!`))
+        .finally(() => setIsLoading(false));
     }
     if (variation === "LOGIN") {
       // nextauth signin callback
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error(`Invalid credentials!!`);
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success(`Logged in!!`);
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -49,6 +68,17 @@ const AuthenticationForm = () => {
     setIsLoading(true);
 
     // Nextauth google signin
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error(`Something went wrong!! Social Signin failed!!`);
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success(`Logged in!!`);
+        }
+      })
+      .finally(() => setIsLoading(false));
+    // signOut();
   };
 
   return (
