@@ -16,21 +16,40 @@ datasource db {
 model User {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   username       String?
-  name           String
-  email          String   @unique
+  name           String?
+  email          String?   @unique
   emailVerified   DateTime?
-  hashedPassword String?
   image          String? //(URL to the user’s profile picture)
+  hashedPassword String?
   bio            String? //(Short bio or description of the user)
   createdAt      DateTime @default(now()) // (Timestamp when the user account was created)
   updatedAt      DateTime @updatedAt // (Timestamp when the user profile was last updated)
   recipe         Recipe[]
   rating         Rating[]
-  account        Account[]
+  accounts        Account[]
   //  recipes: Array of ObjectId (References to recipes created by the user)
   //  followedCooks: Array of ObjectId (References to users they follow)
   //  followers: Array of ObjectId (References to users who follow them)
   
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+
 }
 
 model Recipe {
@@ -53,24 +72,7 @@ model Recipe {
   // comments: Array of Objects (Subdocuments containing userId, comment, and createdAt)
 }
 
-model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.String
-  session_state     String?
 
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@unique([provider, providerAccountId])
-
-}
 
 model Rating {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId

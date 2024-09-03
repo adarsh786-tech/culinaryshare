@@ -10,12 +10,14 @@ import Input from "@/app/components/(generic)/Input";
 import Button from "@/app/components/(generic)/Button";
 import SocialAuth from "@/app/components/(generic)/SocialAuth";
 import { BsGithub, BsGoogle } from "react-icons/bs";
+import { useRouter } from "next/navigation";
 
 type Variation = "REGISTER" | "LOGIN";
 
 const AuthenticationForm = () => {
   const [variation, setVariation] = useState<Variation>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const toggleVariations = useCallback(() => {
     if (variation === "LOGIN") {
@@ -78,7 +80,7 @@ const AuthenticationForm = () => {
         }
       })
       .finally(() => setIsLoading(false));
-    // signOut();
+    // router.push("/");
   };
 
   return (

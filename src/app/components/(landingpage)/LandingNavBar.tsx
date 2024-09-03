@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 
 import { useSession } from "next-auth/react";
+import ProfileMenu from "@/app/components/(generic)/ProfileMenu";
 
 const font = Cabin({
   weight: "600",
@@ -18,11 +19,7 @@ const LandingNavBar = () => {
   const { data: session, status } = useSession();
   console.log("Session Details: " + JSON.stringify(session, null, 2));
 
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     alert(`Session ${status}`);
-  //   }
-  // }, [status]);
+ 
 
   return (
     <nav className="border-b-2 border-white p-4 bg-gradient-to-r from-slate-500 via-blue-900 to-violet-600 flex items-center justify-between">
@@ -43,7 +40,7 @@ const LandingNavBar = () => {
         </h1>
       </Link>
       <div className="flex items-center gap-x-2">
-        {!session ? (
+        {!session && status === "unauthenticated" ? (
           <Link href="/auth/register">
             <button className="btn bg-purple-500 text-slate-950 font-bold py-2 px-4 rounded-md hover:bg-purple-600 hover:text-white ">
               {" "}
@@ -51,11 +48,7 @@ const LandingNavBar = () => {
             </button>
           </Link>
         ) : (
-          <div className="avatar online">
-            <div className="w-12 rounded-full border-yellow-500 border-2">
-              <Image src={PlaceholderAvatar} alt="Profile Picture" />
-            </div>
-          </div>
+          <ProfileMenu />
         )}
       </div>
     </nav>

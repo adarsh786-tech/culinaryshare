@@ -15,10 +15,10 @@ export const authOptions: AuthOptions = {
       clientId: process.env.GITHUB_AUTH_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_AUTH_SECRET as string,
     }),
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_AUTH_CLIENT_ID as string,
-    //   clientSecret: process.env.GOOGLE_AUTH_SECRET as string,
-    // }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_AUTH_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_AUTH_SECRET as string,
+    }),
     CredentialsProvider({
       name: "credentials",
       credentials: {
@@ -54,7 +54,7 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
 
     // Seconds - How long until an idle session expires and is no longer valid.
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    // maxAge: 30 * 24 * 60 * 60, // 30 days
   },
 
   secret: process.env.NEXTAUTH_SECRET,
