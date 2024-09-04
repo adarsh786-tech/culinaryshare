@@ -3,9 +3,10 @@ import { Cabin } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/culinary_share_logo.png";
-import PlaceholderAvatar from "@/assets/placeholder_avatar.jpg";
+
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 import ProfileMenu from "@/app/components/(generic)/ProfileMenu";
@@ -17,14 +18,13 @@ const font = Cabin({
 
 const LandingNavBar = () => {
   const { data: session, status } = useSession();
-  console.log("Session Details: " + JSON.stringify(session, null, 2));
-
- 
+  // console.log("Session Details: " + JSON.stringify(session, null, 2));
+  const router = useRouter();
 
   return (
     <nav className="border-b-2 border-white p-4 bg-gradient-to-r from-slate-500 via-blue-900 to-violet-600 flex items-center justify-between">
       <Link href="/" className="flex items-center">
-        <div className="relative w-8 h-8 mr-4">
+        <div className="relative w-8 h-8 mr-4" onClick={() => router.push("/")}>
           <Image
             fill
             alt="Logo"

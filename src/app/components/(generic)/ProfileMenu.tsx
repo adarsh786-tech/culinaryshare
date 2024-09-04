@@ -1,5 +1,6 @@
 "use client";
-
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
@@ -12,13 +13,16 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
+
+import RecipeUpload from "@/assets/recipe_upload.png";
+import Logout from "@/assets/logout.png";
 
 import { signOut, useSession } from "next-auth/react";
 
 const ProfileMenu = () => {
   const { data: session, status } = useSession();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const router = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -98,23 +102,40 @@ const ProfileMenu = () => {
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <div
+              className="flex flex-row gap-2 items-center justify-center"
+              onClick={() => router.push("/recipe/recipe-form")}
+            >
+              <div className="rounded-full border-yellow-500 border-2">
+                <Image
+                  src={RecipeUpload}
+                  alt="Recipe upload"
+                  width={35}
+                  height={35}
+                />
+              </div>
+              <h3 className="text-black">Upload Your Recipe</h3>
+            </div>
           </ListItemIcon>
-          Add another account
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <div
+              className="flex flex-row gap-2 items-center justify-center"
+              onClick={() => signOut()}
+            >
+              <div className="rounded-full border-yellow-500 border-2 flex items-center justify-center">
+                <Image
+                  src={Logout}
+                  alt="Signout"
+                  width={40}
+                  height={40}
+                  className="-mr-2"
+                />
+              </div>
+              <h3 className="text-black">Sign Out</h3>
+            </div>
           </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <div onClick={() => signOut()}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </div>
         </MenuItem>
       </Menu>
     </React.Fragment>
