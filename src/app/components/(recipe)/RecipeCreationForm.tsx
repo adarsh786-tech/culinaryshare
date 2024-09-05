@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import RecipeFormImage from "@/assets/recipe_form_mockup.jpg";
+import RecipeFormImage from "@/assets/recipe_form_mockup.png";
 
 const RecipeCreationForm = () => {
   const router = useRouter();
@@ -125,7 +125,7 @@ const RecipeCreationForm = () => {
       <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
         <div className="flex flex-col justify-center px-4 py-12 md:py-16 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-24 xl:col-span-6">
           <h1 className="mt-8 text-3xl font-bold tracking-tight text-black md:text-4xl lg:text-6xl">
-            People who care about your growth
+            Describe Recipe Here
           </h1>
           <p className="mt-8 text-lg text-gray-700">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
@@ -155,7 +155,7 @@ const RecipeCreationForm = () => {
         </div>
         <div className="relative lg:col-span-5 lg:-mr-8 xl:col-span-6 m-5">
           <Image
-            className="aspect-[3/2] bg-gray-50 object-cover lg:aspect-[4/3] lg:h-[600px] xl:aspect-[16/9]"
+            className="aspect-[3/2]  object-cover lg:aspect-[4/3] lg:h-[600px] xl:aspect-[16/9]"
             src={RecipeFormImage}
             fill
             alt="Image by pch.vector on Freepik"
