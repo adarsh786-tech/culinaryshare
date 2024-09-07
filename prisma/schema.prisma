@@ -53,17 +53,19 @@ model Account {
 }
 
 model Recipe {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  title        String //(Title of the recipe)
-  description  String //(Brief description of the recipe)
-  ingredients  String[] // Array of Strings (List of ingredients required)
-  instructions String[] //Array of Strings (Step-by-step cooking instructions)
-  tags         String[] //Array of Strings (Tags like "Vegetarian," "Gluten-Free," etc.)
-  authorID     String   @db.ObjectId //(Reference to the user who created the recipe)
-  image        String //(URL to the recipe image)
-  avgRating    Float // (Calculated average rating of the recipe)
-  createdAt    DateTime @default(now()) // (Timestamp when the recipe was created)
-  updatedAt    DateTime @updatedAt // (Timestamp when the recipe was last updated)
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  recipeName          String //(Title of the recipe)
+  recipeDescription   String //(Brief description of the recipe)
+  recipeIngredients   String // Array of Strings (List of ingredients required)
+  recipeSteps         String //(Step-by-step cooking instructions)
+  recipeCookingTime   String
+  recipeServingSize   String
+  authorID            String   @db.ObjectId //(Reference to the user who created the recipe)
+  tags                String? //Array of Strings (Tags like "Vegetarian," "Gluten-Free," etc.)
+  image               String? //(URL to the recipe image)
+  avgRating           Float? // (Calculated average rating of the recipe)
+  createdAt           DateTime @default(now()) // (Timestamp when the recipe was created)
+  updatedAt           DateTime @updatedAt // (Timestamp when the recipe was last updated)
 
   user    User      @relation(fields: [authorID], references: [id])
   rating  Rating[]

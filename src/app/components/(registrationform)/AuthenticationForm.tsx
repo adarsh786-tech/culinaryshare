@@ -44,7 +44,7 @@ const AuthenticationForm = () => {
 
     if (variation === "REGISTER") {
       axios
-        .post("/api/register", data)
+        .post("/api/register-user", data)
         .catch(() => toast.error(`Something went wrong!!`))
         .finally(() => setIsLoading(false));
     }
