@@ -5,12 +5,15 @@ import { Cabin } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 
+import { useSession } from "next-auth/react";
+
 const font = Cabin({
   weight: "600",
   subsets: ["latin"],
 });
 
 const LandingHeroPage = () => {
+  const { data: session, status } = useSession();
   const router = useRouter();
   return (
     <div className="bg-gradient-to-r from-slate-500 via-blue-900 to-violet-600 text-white font-bold py-36 text-center space-y-5">
@@ -30,7 +33,15 @@ const LandingHeroPage = () => {
           From Around The World
         </div>
         <div className="flex flex-row items-center justify-center gap-10 m-10">
-          <button className="btn btn-active btn-primary">JOIN US</button>
+          {status === "unauthenticated" ? (
+            <button
+              className="btn btn-active btn-primary"
+              onClick={() => router.push("/auth/register")}
+            >
+              JOIN US
+            </button>
+          ) : null}
+
           <button
             className="btn btn-active btn-accent"
             onClick={() => router.push("/recipe/explore-recipes")}

@@ -1,94 +1,221 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import SampleFood from "@/assets/sample_food.jpg";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { Cabin, Ubuntu } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Rating } from "@mui/material";
 
-const teamData = [
-  {
-    indx: 1,
-    name: "Liam",
-    role: "Lead Developer",
-    bio: "With a passion for coding and problem-solving, Liam led the development team to ensure the website's functionality was top-notch.",
-    instaHandle: "#",
-    twitterHandle: "#",
-    linkedinHandle: "#",
-  },
-];
+const font = Cabin({
+  weight: "600",
+  subsets: ["latin"],
+});
+const titleFont = Ubuntu({
+  weight: "700",
+  subsets: ["latin"],
+});
 
-const RecipeCardDesign = () => {
-  const [recipeList, setRecipeList] = useState([]);
+const RecipeCardDesign = ({
+  recipeName,
+  recipeDescription,
+  recipeIngredients,
+  recipeSteps,
+  recipeCookingTime,
+  recipeServingSize,
+  name,
+  avgRating,
+}: {
+  recipeName: string;
+  recipeDescription: string;
+  recipeIngredients: string;
+  recipeSteps: string;
+  recipeCookingTime: string;
+  recipeServingSize: string;
+  name: string;
+  avgRating: number;
+}) => {
   return (
-    <div className="px-10 pb-20" id="team-data">
-      <h2 className="text-center text-4xl text-white font-extrabold mb-10">
-        Our Team, Our Pride
-      </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-gray-300 md:text-xl">
-        Experts Who Handcrafted This Interface To Bring New Experience In Your
-        Life.
-      </p>
-      <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {teamData.map((member) => (
-          <div
-            key={member.indx}
-            className="mx-auto w-[300px] rounded-md border"
-          >
-            <Image
-              src={SampleFood}
-              alt={member.name}
-              width={800}
-              height={200}
-              className="rounded-t-md object-cover "
-            />
-            <div className="p-4">
-              <h1 className="text-lg font-semibold text-white">
-                {member.name}
-              </h1>
-              <h6 className="mt-3 font-medium text-zinc-300">{member.role}</h6>
-              <p className="mt-3 text-sm text-gray-200">{member.bio}</p>
-              <div className="mt-4 flex flex-wrap">
-                <div className="w-auto p-1.5">
-                  <Link href={member.instaHandle}>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 hover:border-gray-400">
-                      <Image
-                        src="/instagram.svg"
-                        width={20}
-                        height={20}
-                        alt="Instagram"
-                      />
-                    </div>
-                  </Link>
+    <div className="px-10 pb-20 bg-gradient-to-r from-slate-500 via-blue-900 to-violet-600">
+      <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 ">
+        <div className="mx-auto w-[450px]  rounded-md border-2 border-purple-500 drop-shadow-2xl">
+          <Image
+            src={SampleFood}
+            alt="Food image"
+            width={440}
+            height={200}
+            className="object-cover p-2 rounded-3xl "
+          />
+
+          <div className="flex flex-col">
+            <div className="flex flex-row justify-between">
+              <div>
+                <span
+                  className={cn(
+                    "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                    titleFont.className
+                  )}
+                >
+                  Recipe name
+                </span>
+
+                <div className="label p-2 mt-1">
+                  <span
+                    className={cn(
+                      "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-2xl p-1 bg-slate-300",
+                      font.className
+                    )}
+                  >
+                    {recipeName}
+                  </span>
                 </div>
-                <div className="w-auto p-1.5">
-                  <Link href={member.linkedinHandle}>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 hover:border-gray-400">
-                      <Image
-                        src="/linkedin.svg"
-                        width={20}
-                        height={20}
-                        alt="Linkedin"
-                      />
-                    </div>
-                  </Link>
+              </div>
+              <div>
+                <span
+                  className={cn(
+                    "label-alt-text ml-3 -mb-2 mr-3 text-slate-300 font-bold underline",
+                    titleFont.className
+                  )}
+                >
+                  Recipe author
+                </span>
+
+                <div className="label p-2 mt-1">
+                  <span
+                    className={cn(
+                      "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-2xl p-1 bg-slate-300",
+                      font.className
+                    )}
+                  >
+                    {name}
+                  </span>
                 </div>
-                <div className="w-auto p-1.5">
-                  <Link href={member.twitterHandle}>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-300 hover:border-gray-400">
-                      <Image
-                        src="/twitter.svg"
-                        width={20}
-                        height={20}
-                        alt="Twitter"
-                      />
-                    </div>
-                  </Link>
+              </div>
+            </div>
+
+            <span
+              className={cn(
+                "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                titleFont.className
+              )}
+            >
+              Recipe description
+            </span>
+            <div className="label p-2 mt-1">
+              <span
+                className={cn(
+                  "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-3xl p-1 bg-slate-300",
+                  font.className
+                )}
+              >
+                {recipeDescription}
+              </span>
+            </div>
+            <span
+              className={cn(
+                "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                titleFont.className
+              )}
+            >
+              Recipe ingredients
+            </span>
+            <div className="label p-2 mt-1">
+              <span
+                className={cn(
+                  "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-3xl p-1 bg-slate-300",
+                  font.className
+                )}
+              >
+                {recipeIngredients}
+              </span>
+            </div>
+            <span
+              className={cn(
+                "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                titleFont.className
+              )}
+            >
+              Recipe steps
+            </span>
+            <div className="label p-2 mt-1 ">
+              <span
+                className={cn(
+                  "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-3xl p-1 bg-slate-300",
+                  font.className
+                )}
+              >
+                {recipeSteps}
+              </span>
+            </div>
+            <div className="flex flex-row gap-2">
+              <div className="flex flex-col">
+                <span
+                  className={cn(
+                    "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                    titleFont.className
+                  )}
+                >
+                  Cooking time
+                </span>
+                <div className="label p-2 mt-1">
+                  <span
+                    className={cn(
+                      "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-2xl p-1 bg-slate-300",
+                      font.className
+                    )}
+                  >
+                    {recipeCookingTime}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <span
+                  className={cn(
+                    "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                    titleFont.className
+                  )}
+                >
+                  Serving size
+                </span>
+                <div className="label p-2 mt-1">
+                  <span
+                    className={cn(
+                      "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-2xl p-1 bg-slate-300",
+                      font.className
+                    )}
+                  >
+                    Servings: {recipeServingSize}
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-col">
+                <span
+                  className={cn(
+                    "label-alt-text ml-3 -mb-2 text-slate-300 font-bold underline",
+                    titleFont.className
+                  )}
+                >
+                  Average rating
+                </span>
+                <div className="label p-2 flex items-center justify-center mt-1">
+                  <div
+                    className={cn(
+                      "label-text text-slate-950 text-lg font-bold border-2 border-white rounded-2xl p-1",
+                      font.className
+                    )}
+                  >
+                    <Rating
+                      name="half-rating-read"
+                      defaultValue={avgRating}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

@@ -5,11 +5,12 @@ import Link from "next/link";
 import Logo from "@/assets/culinary_share_logo.png";
 
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useSession } from "next-auth/react";
 import ProfileMenu from "@/app/components/(generic)/ProfileMenu";
+import { Avatar } from "@mui/material";
+import SamplePlaceholder from "../../../assets/placeholder_avatar.jpg";
 
 const font = Cabin({
   weight: "600",
@@ -47,6 +48,15 @@ const LandingNavBar = () => {
               Sign in
             </button>
           </Link>
+        ) : status === "loading" ? (
+          <div className="avatar online flex items-center justify-center">
+            <div className="w-12 rounded-full border-yellow-500 border-2">
+              <Avatar
+                src="../../../assets/placeholder_avatar.jpg"
+                className="w-full h-full"
+              />
+            </div>
+          </div>
         ) : (
           <ProfileMenu />
         )}

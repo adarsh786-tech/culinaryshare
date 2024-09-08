@@ -42,7 +42,6 @@ const ProfileMenu = () => {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            {/* <Avatar sx={{ width: 32, height: 32 }}>M</Avatar> */}
             <div className="avatar online">
               <div className="w-12 rounded-full border-yellow-500 border-2">
                 <img src={session?.user?.image!} alt="Profile Picture" />

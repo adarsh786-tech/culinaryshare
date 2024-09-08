@@ -48,6 +48,26 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+  // callbacks: {
+  //   async signIn({ user, account, profile }) {
+  //     const existingUser = await prisma.user.findUnique({
+  //       where: {
+  //         email: user.email!,
+  //       },
+  //     });
+  //     if (existingUser) {
+  //       await prisma.account.create({
+  //         data: {
+  //           userId: existingUser.id,
+  //           type: account?.type!,
+  //           provider: account?.provider!,
+  //           providerAccountId: account?.userId!,
+  //         },
+  //       });
+  //     }
+  //     return true;
+  //   },
+  // },
   debug: process.env.NODE_ENV === "development",
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
